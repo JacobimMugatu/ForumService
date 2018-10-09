@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-
 import telran.forum.domain.Post;
+
 
 public interface ForumRepository extends MongoRepository<Post, Integer> {
 	Iterable<Post> findByTagsIn(List<String> tags);
@@ -16,5 +16,10 @@ public interface ForumRepository extends MongoRepository<Post, Integer> {
 	Iterable<Post> findByDateCreatedBetween(LocalDate from, LocalDate to);
 	
 	Stream<Post> findAllBy();
+
+	Post findById(String id);
+
+	void deleteById(String id);
+
 
 }
