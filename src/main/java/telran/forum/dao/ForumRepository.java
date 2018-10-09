@@ -20,6 +20,7 @@ public interface ForumRepository extends MongoRepository<Post, Integer> {
 	Post findById(String id);
 
 	void deleteById(String id);
+	
 
 
 }

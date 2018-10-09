@@ -7,5 +7,6 @@ public interface ForumURI {
    String DATES = "/dates";
    String TAGS = "/tags";
    String LIKE = "/like";
+   String WORDS = "/words";
 	
 }

@@ -27,7 +27,7 @@ public class ForumController {
 
 	@PostMapping(ForumURI.POST)
 	public Post addNewPost(@RequestBody NewPostDto newPost) {
-
+		
 		return forumService.addNewPost(newPost);
 
 	}
@@ -60,6 +60,13 @@ public class ForumController {
 	public Post addComment(@PathVariable String id, @RequestBody NewCommentDto newComment) {
 		return forumService.addComment(id, newComment);
 	}
+	
+	@PutMapping(ForumURI.COMMENT + ForumURI.LIKE + "/{id}")
+	public boolean addCommentLike(@PathVariable String id, @RequestBody NewCommentDto newComment) {
+		
+		return forumService.addCommentLike(id, newComment);
+		
+	}
 
 	@PostMapping(ForumURI.POSTS + ForumURI.TAGS)
 	public Iterable<Post> findByTags(@RequestBody List<String> tags) {
@@ -75,5 +82,5 @@ public class ForumController {
 	public Iterable<Post> findByDate(@RequestBody DatePeriodDto period) {
 		return forumService.findByDate(period);
 	}
-
+	
 }

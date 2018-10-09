@@ -2,8 +2,8 @@ package telran.forum.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +95,7 @@ public class ForumServiceImpl implements ForumService {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		try {
 			LocalDate a = LocalDate.parse(period.getFrom(), dtf);
-			LocalDate b = LocalDate.parse(period.getTo(), dtf);
+			LocalDate b = LocalDate.parse(period.getTo(), dtf).plus(1, ChronoUnit.DAYS);
 			return forumRepository.findByDateCreatedBetween(a, b);
 		}catch (IllegalArgumentException e) {
 			
@@ -103,4 +103,28 @@ public class ForumServiceImpl implements ForumService {
 		return null;
 	}
 
+	@Override
+	public boolean addCommentLike(String id, NewCommentDto newComment) {
+		Post post = getPost(id);
+		if(post != null) {
+			if(post.getComments().isEmpty()) {
+				return false;
+			}
+			Comment c = post.getComments()
+					.stream()
+					.filter(x -> x.getUser().equals(newComment.getUser()))
+					.filter(x -> x.getMessage().equals(newComment.getMessage()))
+					.findFirst()
+					.orElse(null);
+			if(c != null) {
+				c.addLike();
+				forumRepository.save(post);
+				return true;
+			}
+					
+		}
+		return false;
+	}
+
+	
 }

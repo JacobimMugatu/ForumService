@@ -28,4 +28,6 @@ public interface ForumService {
 	
 	Iterable<Post> findByDate(DatePeriodDto period);
 
+	boolean addCommentLike(String id, NewCommentDto newComment);
+
 }
