@@ -41,7 +41,7 @@ public class ForumServiceImpl implements ForumService {
 		
 		Post post = getPost(id);
 		if(post != null) {
-			forumRepository.deleteById(id);
+			forumRepository.delete(post);;
 		}
 		return post;
 	}
